@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-	<title th:text="${@environment.getProperty('spring.application.name')}">Website Builder</title>
+	<title th:text="${@environment.getProperty('spring.application.name')+ ' :: ' + controlPanelPage.title}">Website Builder</title>
     
     <link rel="icon" th:href="@{/img/favicon.ico}"/>
     
