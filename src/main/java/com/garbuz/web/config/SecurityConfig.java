@@ -62,15 +62,13 @@ public class SecurityConfig  {
 	}
 	@Bean
 	protected SecurityFilterChain  securityFilterChain(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().requestMatchers("/admin/**", "/api/admin/**").hasRole(ROLE_ADMIN)
-		.and()
-		.formLogin()
-		.loginPage("/login")
-		.permitAll()
-		.and()
-		.logout()
-		.logoutUrl("/logout")
-		.permitAll()
+        http.authorizeRequests(requests -> requests.requestMatchers("/admin/**", "/api/admin/**").hasRole(ROLE_ADMIN))
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .permitAll())
 		;
 		return http.build();
 		
