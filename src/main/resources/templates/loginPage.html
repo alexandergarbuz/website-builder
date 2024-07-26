@@ -14,7 +14,7 @@
 <body>
 
 	<div id="loginSection" class="container border-top mt-5 py-5">
-			<h1>Log In</h1>
+			<h1><i class="fa fa-lock"></i> Log In</h1>
 			<div th:if="${param.error}">Invalid username and password.</div>
 			<div th:if="${param.logout}">You have been logged out.</div>
 			<form th:action="@{/login}" method="post">
