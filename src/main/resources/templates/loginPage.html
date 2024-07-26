@@ -1,29 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Please sign in</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" integrity="sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56" crossorigin="anonymous"/>
-  </head>
-  <body>
-     <div class="container">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <div class="alert alert-success" role="alert">You have been signed out</div><p>
-      <form class="form-signin" method="post" action="/login">
-      <input name="_csrf" type="hidden" value="bEO5bf-GA3E2i1ApVwAqrAu351EzcwJLFCgCC9xtlqnUylwxCXGJC5vnNBcbvGcYYy0enmqGyjMER2dmJxBjO-lfr822825U" />
-        <p>
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        </p>
-        <p>
-          <label for="password" class="sr-only">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-</div>
-</body></html>
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+	<title th:text="${@environment.getProperty('spring.application.name')+ ' :: ' + loginPage.title}">Website Builder</title>
+    
+    <link rel="icon" th:href="@{/img/favicon.ico}"/>
+    
+    <link th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+	<link th:href="@{/css/default.css}" rel="stylesheet"/>
+    
+</head>
+<body>
+
+	<div id="loginSection" class="container border-top mt-5 py-5">
+			<h1>Log In</h1>
+			<div th:if="${param.error}">Invalid username and password.</div>
+			<div th:if="${param.logout}">You have been logged out.</div>
+			<form th:action="@{/login}" method="post">
+				<div class="row">
+					<div class="col m-3">
+						<input type="text" name="username" placeholder="Username" value="admin" class="form-control"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m-3">
+						<input type="password" name="password" placeholder="Password" value="password" class="form-control"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m-3">
+						<button type="submit" value="Log in" class="btn btn-primary" ><i class="fa fa-lock"></i> Log In</button>
+						<a th:href="@{/}" class="btn btn-success"><i class="fa fa-home"></i>  Home</a>
+						
+					</div>
+				</div>
+			</form>
+	</div>
+	
+			
+	<div id="footerSection" class="container border-top mt-5 py-5">
+	    	<span>
+	      		&copy; 2024&nbsp;
+			</span>
+	</div>
+
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
