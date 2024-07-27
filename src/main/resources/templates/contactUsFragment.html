@@ -1,0 +1,52 @@
+<div id="bodyFragment" class="container">
+
+	<div id="contactUsSection">
+	
+	    <h2>Contact Us</h2>
+	    
+	    
+	<div class="d-flex justify-content-center">
+		<div id="delaySpinner" class="spinner-border" role="status">
+			<span class="sr-only">Sending...</span>
+		</div>	
+	</div>
+  <div id="alertSuccess" class="alert alert-success">
+    <strong>Ура!</strong> Ваше сообщение отправлено.
+  </div>
+  <div id="alertError" class="alert alert-danger">
+    <strong>Ошибка!</strong> Мы не смогли отправить ваше сообщение. Пожалуйста, исправьте ошибки уаказаные ниже и попробуйте еще раз.
+    <p id="errorMessage"></p>
+  </div>
+  <form id="contactUsForm" novalidate>
+    <div>
+	    <div class="row">
+		    <div class="col mb-3"><input id="sendEndPointField" name="sendEndPointField" th:value="@{/message/contact}" class="form-control" disabled="disabled"/></div>
+	    </div>
+	    <div class="row">
+	      <div class="col mb-3">
+	          <input class="form-control" type="text" placeholder="Your Name" required name="nameField" id="nameField">
+	      </div>
+	      <div class="col mb-3">
+	          <input class="form-control" type="text" placeholder="Your Email" required name="emailField" id="emailField">
+	      </div>
+	      <div class="col mb-3">
+	          <input class="form-control" type="text" placeholder="Your Phone" required name="phoneField" id="phoneField">
+	      </div>    
+	    </div>
+	    <div class="row">
+	      <div class="col mb-3">
+	          <textarea class="form-control" placeholder="Message" rows="10" required name="messageField" id="messageField"></textarea>
+	      </div>
+	    </div>
+	    <div class="row">
+	      <div class="col mb-3">
+	      	<div id="submitButtonBlock">
+	        	<button class="btn btn-primary" type="submit" name="Submit" id="submitButton">Send Message</button>
+	        </div>
+	      </div>
+	    </div>
+    </div>
+  </form>
+</div>
+
+	<script th:src="@{/js/send-email.js}"></script>
