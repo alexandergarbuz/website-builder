@@ -116,38 +116,6 @@
 	
 	    <h2 class="display-6 text-center mb-4">Request Support</h2>
 	
-	<div class="d-flex justify-content-center">
-		<div id="delaySpinner" class="spinner-border" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>	
-	</div>
-	<div id="resultContainer"></div>
-	
-		<div id="messageFormContainer">
-			<form id="messageForm" >
-			<div class="mb-2">
-				<label for="sendEndPointField" class="form-label">Send endpoint</label>
-				<input id="sendEndPointField" name="sendEndPointField" th:value="@{/message/send}" class="form-control"/>
-			</div>
-			<div class="mb-2">
-				<label for="toAddressField" class="form-label">To Address</label>
-				<input id="toAddressField" name="toAddressField" value="maya@madisonsleepconsultant.com" class="form-control"/>
-			</div>
-			<div class="mb-2">
-				<label for="subjectField" class="form-label">Subject</label>
-				<input id="subjectField" name="subjectField" value="Rabbit MQ Test" class="form-control"/>
-			</div>
-			<div class="mb-2">
-				<label for="messageField" class="form-label">Message</label>
-				<textarea id="messageField" name="messageField" class="form-control"></textarea>
-			</div>
-			<div class="mb-2">
-				<button id="sendButton" name="sendButton" class="btn btn-primary">Send Message</button>
-				<a href="#" id="clearButton" name="clearButton" class="btn btn-secondary">Clear Results</a>
-			</div>
-			</form>
-		</div>	
-	</div>
 
 
 </div>

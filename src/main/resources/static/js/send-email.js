@@ -1,17 +1,19 @@
 
 (()=>{
 
-	hideElementById("alertError")
-	hideElementById("alertSuccess")
-
-})();
-
-function showErrorAlert(message) {
+function showErrorMessage(message) {
 	document.getElementById("errorMessage").innerHTML = message;
 	showElementById("alertError");	
 }
-
-
+function showSuccessMessage() {
+	showElementById("alertSuccess");
+}
+function hideErrorMessage() {
+	hideElementById("alertError");	
+}
+function hideSuccessMessage() {
+	hideElementById("alertSuccess");	
+}
 function validateElement(element, isValid, message) {
 
 	var elementClass = (isValid) ? "is-valid" : "is-invalid";
@@ -25,98 +27,6 @@ function validateElement(element, isValid, message) {
 	labelElement.textContent = message; 
 	parentElement.appendChild(labelElement);
 }
-
-document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    var phoneField = document.getElementById("phoneField");
-    var nameField = document.getElementById("nameField");
-    var emailField = document.getElementById("emailField");
-    var messageField = document.getElementById("messageField");
-
-    var hasErrors = false;
-
-    /*
-    * Reset all of the validation labels before starting validation
-    */
-    document.querySelectorAll(".form-validation-label").forEach(element => {element.remove()});
-    document.querySelectorAll(".form-control").forEach(element => {
-    	element.classList.remove("is-valid");
-    	element.classList.remove("is-invalid");
-    });
-
-    if(!validateName()) {
-       validateElement(nameField, false, "Name is required!");
-       hasErrors = true;
-    } else {
-        validateElement(nameField, true, "Looks Good!");
-    }
-    if(!validatePhone()) {
-    	validateElement(phoneField, false, "Phone is required!");
-    	hasErrors = true;
-    } else {
-    	validateElement(phoneField, true, "Looks Good!");
-    }
-    if(!validateEmail()) {
-    	validateElement(emailField, false, "Email is required!");
-    	hasErrors = true;
-    } else {
-    	validateElement(emailField, true, "Looks Good!");
-    }
-    if(!validateMessage()) {
-    	validateElement(messageField, false, "Message is required!");
-    	hasErrors = true;
-    } else {
-    	validateElement(messageField, true, "Looks Good!");
-    }    
-    
-
-    if(hasErrors) {
-    	return false;
-    }
-
-	var url = "./message/send";
-	var data = {
-			name: nameField.value,
-			email: emailField.value,
-			phoneNumber: phoneField.value,
-			message: messageField.value
-			
-	}
-	fetch(url, {
-		method:"POST",
-		headers: {"Content-Type": "application/json"},
-		body: JSON.stringify(data)
-	})
-	.then(function (response) {
-         if (!response.ok) {
-             throw new Error("Response was not ok " + response.statusText);
-         }
-		return response.json();		
-	})
-	.then((jsonData) => {
-		
-		if(jsonData.status === "Success") {
-			hideElementById("alertError")
-			showElementById("alertSuccess");
-		} else {
-		 	var errorMsg = "<ul>";
-		 	
-		 	jsonData.errors.forEach(error => {
-		 		errorMsg += "<li>" + error + "</li>";
-		 	});
-		 	errorMsg += "</ul>"
-
-			hideElementById("alertSuccess");
-			showErrorAlert(errorMsg);
-		 	
-		}
-	})
-	.catch(function (error) {
-		hideElementById("alertSuccess");
-		showErrorAlert("Email сервис недоступен. Пожалуйста попробуйте позже. (" + error + ")");
-	});
-});
 
 function hideElementById(id){
 	document.getElementById(id).style.visibility = "hidden";
@@ -175,3 +85,128 @@ function validatePhone() {
 	phoneField.value = formatedPhone;
 	return true;
 }
+function hideSpinner() {
+	document.getElementById("delaySpinner").style.display="none";
+}
+function showSpinner() {
+	document.getElementById("delaySpinner").style.display="block";
+}
+function resetFormValidationResults() {
+	document.querySelectorAll(".form-validation-label").forEach(element => {element.remove()});
+	document.querySelectorAll(".form-control").forEach(element => {
+	  	element.classList.remove("is-valid");
+	   	element.classList.remove("is-invalid");
+	});	
+}
+
+function validateUserInputAndMarkErrors() {
+	var hasErrors = false;
+	    if(!validateName()) {
+	       validateElement(nameField, false, "Name is required!");
+	       hasErrors = true;
+	    } else {
+	        validateElement(nameField, true, "Looks Good!");
+	    }
+	    if(!validatePhone()) {
+	    	validateElement(phoneField, false, "Phone is required!");
+	    	hasErrors = true;
+	    } else {
+	    	validateElement(phoneField, true, "Looks Good!");
+	    }
+	    if(!validateEmail()) {
+	    	validateElement(emailField, false, "Email is required!");
+	    	hasErrors = true;
+	    } else {
+	    	validateElement(emailField, true, "Looks Good!");
+	    }
+	    if(!validateMessage()) {
+	    	validateElement(messageField, false, "Message is required!");
+	    	hasErrors = true;
+	    } else {
+	    	validateElement(messageField, true, "Looks Good!");
+	    }  
+	 return hasErrors;
+}
+
+window.onload = ()=>{
+	// Initialize the state here
+	hideSpinner() ;
+	hideErrorMessage();
+	hideSuccessMessage();
+	// Define global variables		
+	var sendEndPoint = document.getElementById("sendEndPointField").value;
+    var phoneField = document.getElementById("phoneField");
+    var nameField = document.getElementById("nameField");
+    var emailField = document.getElementById("emailField");
+    var messageField = document.getElementById("messageField");
+    
+    //
+	//Define event handlers
+	//
+	document.getElementById("contactUsForm").addEventListener("submit", function(event){
+		event.preventDefault();
+
+	    /*
+	    * Reset all of the validation labels before starting validation
+	    */		
+		resetFormValidationResults();
+		
+	    var hasErrors = validateUserInputAndMarkErrors();
+
+	    if(hasErrors) {
+	    	return false;
+	    }
+	    
+		var data = {
+				name: nameField.value,
+				email: emailField.value,
+				phone: phoneField.value,
+				message: messageField.value
+		}
+		
+		const csrfToken = document.getElementById("_csrf").value;
+		const csrfHeaderName = document.getElementById("_csrf_header").value;
+
+		
+		showSpinner();
+		setTimeout(()=>{
+			fetch(sendEndPoint, {
+				method:"POST",
+				headers: {"Content-Type": "application/json", [csrfHeaderName]: csrfToken},
+				body: JSON.stringify(data)
+			})
+			.then(response => {
+				if(!response.ok) {
+					throw new Error("Response was not ok " + response.statusText);
+				}
+				return response.json();
+			})
+			.then(jsonData => {
+				hideSpinner();
+				if(jsonData.status === "Success") {
+					hideErrorMessage();
+					showSuccessMessage();
+				} else {
+				 	var errorMsg = "<ul>";
+				 	
+				 	jsonData.errors.forEach(error => {
+				 		errorMsg += "<li>" + error + "</li>";
+				 	});
+				 	errorMsg += "</ul>"
+					hideSuccessMessage();
+					showErrorMessage(errorMsg);
+				}
+
+			})
+			.catch(error =>{
+				hideSpinner();
+				hideSuccessMessage();
+				showErrorMessage("Email service is unavailable. Please try again later. (" + error + ")");
+			});
+		}, 500);
+		
+	});
+}
+
+
+})();

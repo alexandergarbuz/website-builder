@@ -28,4 +28,9 @@ public class ContactUsResponse {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	@Override
+	public String toString() {
+		return "ContactUsResponse [errors=" + errors + ", status=" + status + "]";
+	}
+	
 }

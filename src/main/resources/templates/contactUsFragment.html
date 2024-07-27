@@ -1,9 +1,32 @@
 <div id="bodyFragment" class="container">
 
-	<div id="contactUsSection">
+	<div id="mapSection" class="p-5">
+		<h2>Our Location</h2>
+		<div id="addressSection">
+			<ul class="list-unstyled text-small">
+			<li class="mb-1"><i class="fa fa-address-card"></i> 53562 Middleton, WI</li>
+			<li class="mb-1"><i class="fa fa-phone"></i> +1 (555) 555 - 5555</li>
+			<li class="mb-1"><i class="fa fa-envelope"></i> <a href="mailto:email@host.com">email@host.com</a></li>		
+			</ul>
+		</div>
+		<div id="socialMediaLinks">
+	      <h4>Social Media</h4>   
+          <a href="https://www.facebook.com/pustovit.olga" target="_blank"><i class="fa fa fa-facebook" style="width:30px"></i></a>
+          <a href="https://www.instagram.com/olga_bridges_" target="_blank"><i class="fa fa fa-instagram" style="width:30px"></i></a>
+          <a href="https://www.youtube.com/@olgabridges-realtor-sc" target="_blank"><i class="fa fa fa-youtube" style="width:30px"></i></a>
+          <a href="https://www.linkedin.com/in/olga-bridges-187524156/" target="_blank"><i class="fa fa fa-linkedin" style="width:30px"></i></a>
+	   	</div>
+		
+		
+		
+		<iframe 
+			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93200.14989997692!2d-89.60382185517706!3d43.11492315246725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8807a896f3f1865b%3A0x7c3257bb3ad45d50!2sMiddleton%2C%20WI%2053562!5e0!3m2!1sen!2sus!4v1722047343743!5m2!1sen!2sus" 
+			width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+		</iframe>
+	</div>
+	<div id="contactUsSection" class="p-5 bg-body-tertiary">
 	
 	    <h2>Contact Us</h2>
-	    
 	    
 	<div class="d-flex justify-content-center">
 		<div id="delaySpinner" class="spinner-border" role="status">
@@ -11,31 +34,33 @@
 		</div>	
 	</div>
   <div id="alertSuccess" class="alert alert-success">
-    <strong>Ура!</strong> Ваше сообщение отправлено.
+    <strong>Yay!</strong> Your message has been sent.
   </div>
   <div id="alertError" class="alert alert-danger">
-    <strong>Ошибка!</strong> Мы не смогли отправить ваше сообщение. Пожалуйста, исправьте ошибки уаказаные ниже и попробуйте еще раз.
+    <strong>Error!</strong> We were unable to send your message. Please fix the errors below and try agian.
     <p id="errorMessage"></p>
   </div>
   <form id="contactUsForm" novalidate>
     <div>
 	    <div class="row">
-		    <div class="col mb-3"><input id="sendEndPointField" name="sendEndPointField" th:value="@{/message/contact}" class="form-control" disabled="disabled"/></div>
+		    <div class="col mb-3"><input id="sendEndPointField" type="hidden" th:value="@{/message/contact}"/></div>
+		    <div class="col mb-3"><input id="_csrf" type="hidden1" th:value="${pageObject.csrfToken}"/></div>
+		    <div class="col mb-3"><input id="_csrf_header" type="hidden1" th:value="${pageObject.csrfHeader}"/></div>
 	    </div>
 	    <div class="row">
 	      <div class="col mb-3">
-	          <input class="form-control" type="text" placeholder="Your Name" required name="nameField" id="nameField">
+	          <input class="form-control" type="text" placeholder="Your Name" required name="nameField" id="nameField" value="Alex"/>
 	      </div>
 	      <div class="col mb-3">
-	          <input class="form-control" type="text" placeholder="Your Email" required name="emailField" id="emailField">
+	          <input class="form-control" type="text" placeholder="Your Email" required name="emailField" id="emailField" value="alex@garbuz.com">
 	      </div>
 	      <div class="col mb-3">
-	          <input class="form-control" type="text" placeholder="Your Phone" required name="phoneField" id="phoneField">
+	          <input class="form-control" type="text" placeholder="Your Phone" required name="phoneField" id="phoneField" value="6086282448">
 	      </div>    
 	    </div>
 	    <div class="row">
 	      <div class="col mb-3">
-	          <textarea class="form-control" placeholder="Message" rows="10" required name="messageField" id="messageField"></textarea>
+	          <textarea class="form-control" placeholder="Message" rows="10" required name="messageField" id="messageField">123</textarea>
 	      </div>
 	    </div>
 	    <div class="row">

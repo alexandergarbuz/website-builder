@@ -10,9 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.garbuz.web.model.ContactUsMessage;
@@ -21,6 +23,7 @@ import com.garbuz.web.service.MessageService;
 
 @RestController
 @RequestMapping("/message")
+@CrossOrigin(origins = "*", methods = { RequestMethod.POST})
 public class MessageController {
 
 	private Logger LOG = LoggerFactory.getLogger(MessageController.class);
@@ -32,6 +35,7 @@ public class MessageController {
 	}
 	
 	@PostMapping("/contact")
+	@CrossOrigin(origins = "*", methods = { RequestMethod.POST})
 	public ResponseEntity<ContactUsResponse> send(@RequestBody final ContactUsMessage messageToSend) {
 		LOG.debug("Sending {} ", messageToSend);
 		messageService.send(messageToSend);
@@ -46,7 +50,7 @@ public class MessageController {
 	            response.setStatus(ContactUsResponse.ERROR);
 			}			
 		}
-		
+		LOG.debug("Sending response {}" ,response);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

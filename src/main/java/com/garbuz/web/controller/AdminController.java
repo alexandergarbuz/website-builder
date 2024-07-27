@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.garbuz.web.model.ControlPanelPage;
+import com.garbuz.web.model.page.ControlPanelPage;
 
 import jakarta.servlet.http.HttpServletRequest;
 

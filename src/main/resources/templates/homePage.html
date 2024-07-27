@@ -15,7 +15,7 @@
 <div id="topNavigationSection" class="container">
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a class="navbar-brand" th:href="@{/}"><i class="fa fa-home"></i> Home Link</a>
+        <a class="navbar-brand" th:href="@{/}"><i class="fa fa-home"></i> Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,59 +23,23 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          	<li class="nav-item"><a class="nav-link" th:href="@{/link}"><i class="fa  fa-files-o"></i> Internal Link</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/link}"><i class="fa  fa-files-o"></i> Another Link</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/link}"  target="_blank"><i class="fa  fa-files-o"></i> New Window Link  <i class="fa fa-external-link"></i></a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-gear"></i> Dropdown Menu 
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li class="dropdown-header">Menu Header</li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><hr class="dropdown-divider"></li>
-	              <li class="dropdown-header">Another Header</li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><a class="dropdown-item" th:href="@{/item}" target="_blank">Menu item <i class="fa fa-external-link"></i></a></li>
-	              <li><hr class="dropdown-divider"></li>
-	              <li class="dropdown-header">Last Header</li>
-	              <li><a  class="dropdown-item" th:href="@{/link}"><i class="fa fa-list"></i> Last Item</a></li>
-              </ul>
-            </li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/#pricingHeader}">Pricing</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/#supportSection}">Support</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/admin/home}">Control Panel</a></li>
           </ul>
         </div>
       </div>
     </nav>
-
-
-  <header>
-    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-      <a th:href="@{/}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-        <span class="fs-4"><i class="fa fa-home"></i> Home</span>
-      </a>
-
-      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Services</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#pricingHeader">Pricing</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#supportSection">Support</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" th:href="@{/contact}">Contact</a>
-        <a class="me-3 py-2 link-body-emphasis text-decoration-none" th:href="@{/admin/home}">Control Panel</a>
-      </nav>
-    </div>
-</header>
-
-
+</div>
 
 
 
 
 <div th:insert="~{${contentTemplate}}"></div>
 
-
-  <footer id="footerSection" class="pt-4 my-md-5 pt-md-5 border-top">
+<div id="footerSection" class="container">
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
       <div class="col-12 col-md">
         <small class="d-block mb-3 text-body-secondary">&copy; 2024</small>
@@ -113,7 +77,9 @@
   </footer>
 
 </div>
-	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 </html>

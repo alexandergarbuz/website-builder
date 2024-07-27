@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.garbuz.web.model.LogoutPage;
+import com.garbuz.web.model.page.LogoutPage;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class LogoutController {
 
     @GetMapping("/logout")
     public ModelAndView logout(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) {
-    	LOG.info("Loggout request received");
+    	LOG.debug("Loggout request received");
     	/*
     	 * Implement your pre-logout logic here. 
     	 * Close connections, save shoppoing cart, etc.
