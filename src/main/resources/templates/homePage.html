@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-	<title th:text="${@environment.getProperty('spring.application.name')}">Website Builder</title>
+	<title th:text="${@environment.getProperty('spring.application.name') + ' :: ' + pageObject.title}">Website Builder</title>
     
     <link rel="icon" th:href="@{/img/favicon.ico}"/>
     
@@ -49,28 +49,71 @@
         </div>
       </div>
     </nav>
-</div>
+
+
+  <header>
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a th:href="@{/}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+        <span class="fs-4"><i class="fa fa-home"></i> Home</span>
+      </a>
+
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Services</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#pricingHeader">Pricing</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#supportSection">Support</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" th:href="@{/contact}">Contact</a>
+        <a class="me-3 py-2 link-body-emphasis text-decoration-none" th:href="@{/admin/home}">Control Panel</a>
+      </nav>
+    </div>
+</header>
+
+
+
+
 
 
 <div th:insert="~{${contentTemplate}}"></div>
 
 
-<div id="footerSection" class="container border-top mt-5 py-5">
-    	<span>
-      		&copy; 2024&nbsp;
-      		<ul>
-      			<li><a href="link1" title="Link" class="text-body-secondary" target="_blank"> Footer Link 1</a></li>
-      			<li><a href="link2" title="Link" class="text-body-secondary" target="_blank"> Footer Link 2</a></li>
-      			<li><a href="link3" title="Link" class="text-body-secondary" target="_blank"> Footer Link 3</a></li>
-      		</ul>
-		</span>
-</div>
+  <footer id="footerSection" class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+        <small class="d-block mb-3 text-body-secondary">&copy; 2024</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+          <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
+</div>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
-
-	<link th:href="@{/css/custom-functions.css}" rel="stylesheet"/>
-	<script th:src="@{/js/custom-functions.js}"></script>
-	
 </body>
 </html>

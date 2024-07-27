@@ -21,12 +21,11 @@ public class HomeController {
 	public ModelAndView home(final HttpServletRequest request) {
 		final ModelAndView mv = new ModelAndView();
 		final HomePage homePage = new HomePage();
-		homePage.setTitle("Website Builder");
+		homePage.setTitle("Home");
 		
 		mv.setViewName("homePage");
 		mv.getModel().put("contentTemplate", "homepageBodyFragment");
-		
-		mv.addObject("homePage", homePage);
+		mv.addObject("pageObject", homePage);
 		
 		
 		LOG.debug("Returning {} page", homePage);
