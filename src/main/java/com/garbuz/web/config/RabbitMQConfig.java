@@ -19,7 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EMAIL_QUEUE = "emailQueue";
+    public static final String THANK_YOU_QUEUE = "thankYouQueue";
+    public static final String CONTACT_US_QUEUE = "contactUsQueue";
 
     private RabbitMQProperties rabbitMQProperties;
     
@@ -28,8 +29,13 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue emailQueue() {
-        return new Queue(EMAIL_QUEUE, true);
+    public Queue thankYouQueue() {
+        return new Queue(THANK_YOU_QUEUE, true);
+    }
+    
+    @Bean
+    public Queue contactUsQueue() {
+        return new Queue(CONTACT_US_QUEUE, true);
     }
 
     @Bean

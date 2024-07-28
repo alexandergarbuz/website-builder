@@ -1,61 +1,70 @@
 package com.garbuz.web.model;
 
 import java.io.Serializable;
-import java.util.Objects;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
-	private String toAddress;
+	private String to;
+	private String cc;
+	private String bcc;
     private String subject;
     private String body;
-	
-
-	public String getToAddress() {
-		return toAddress;
+    private boolean isHtml;
+	public String getTo() {
+		return to;
 	}
-
-	public void setToAddress(String toAddress) {
-		this.toAddress = toAddress;
+	public void setTo(String to) {
+		this.to = to;
 	}
-
+	public String getCc() {
+		return cc;
+	}
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+	public String getBcc() {
+		return bcc;
+	}
+	public void setBcc(String bcc) {
+		this.bcc = bcc;
+	}
 	public String getSubject() {
 		return subject;
 	}
-
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-
 	public String getBody() {
 		return body;
 	}
-
-	public void setBody(String text) {
-		this.body = text;
+	public void setBody(String body) {
+		this.body = body;
+	}
+	public boolean isHtml() {
+		return isHtml;
+	}
+	public void setHtml(boolean isHtml) {
+		this.isHtml = isHtml;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(body, subject, toAddress);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Message other = (Message) obj;
-		return Objects.equals(body, other.body) && Objects.equals(subject, other.subject)
-				&& Objects.equals(toAddress, other.toAddress);
-	}
-
-	@Override
-	public String toString() {
-		return "Message [toAddress=" + toAddress + ", subject=" + subject + ", body=" + body + "]";
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

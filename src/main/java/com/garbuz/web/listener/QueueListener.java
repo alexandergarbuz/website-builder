@@ -22,11 +22,11 @@ public class QueueListener {
         this.emailService = emailService;
     }
 
-    @RabbitListener(queues = RabbitMQConfig.EMAIL_QUEUE)
-    public void receiveMessage(final Message message) {
-    	LOG.debug("Sending email to {} with {}", message.getToAddress(), message.getBody());
+    @RabbitListener(queues = {RabbitMQConfig.CONTACT_US_QUEUE, RabbitMQConfig.THANK_YOU_QUEUE})
+    public void receiveContactUsMessage(final Message message) {
+    	LOG.debug("Sending email to {} with {}", message.getTo(), message.getSubject());
         try {
-            emailService.sendEmail(message.getToAddress(), message.getSubject(), message.getBody());
+            emailService.sendEmail(message.getTo(), message.getCc(), message.getBcc(), message.getSubject(), message.getBody(), message.isHtml());
 		} catch (MessagingException e) {
 			LOG.error("Cannot send email: {}", e);
 		}

@@ -1,7 +1,11 @@
 package com.garbuz.web.model;
 
 import java.io.Serializable;
-import java.util.Objects;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 
 public class ContactUsMessage implements Serializable {
@@ -35,23 +39,18 @@ public class ContactUsMessage implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(email, message, name, phone);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof ContactUsMessage))
-			return false;
-		ContactUsMessage other = (ContactUsMessage) obj;
-		return Objects.equals(email, other.email) && Objects.equals(message, other.message)
-				&& Objects.equals(name, other.name) && Objects.equals(phone, other.phone);
-	}
-	@Override
-	public String toString() {
-		return "ContactUsMessage [name=" + name + ", email=" + email + ", phone=" + phone + ", message=" + message
-				+ "]";
-	}
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

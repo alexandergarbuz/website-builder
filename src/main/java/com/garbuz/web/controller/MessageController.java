@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.garbuz.web.config.EmailConfig;
 import com.garbuz.web.model.ContactUsMessage;
 import com.garbuz.web.model.ContactUsResponse;
+import com.garbuz.web.model.Message;
 import com.garbuz.web.service.MessageService;
 
 @RestController
@@ -29,21 +31,46 @@ public class MessageController {
 	private Logger LOG = LoggerFactory.getLogger(MessageController.class);
 	
 	private MessageService messageService;
-	
-	public MessageController(final MessageService messageService) {
+	private EmailConfig emailConfig;
+	public MessageController(final MessageService messageService, final EmailConfig emailConfig) {
 		this.messageService = messageService;
+		this.emailConfig = emailConfig;
 	}
 	
 	@PostMapping("/contact")
 	@CrossOrigin(origins = "*", methods = { RequestMethod.POST})
 	public ResponseEntity<ContactUsResponse> send(@RequestBody final ContactUsMessage messageToSend) {
 		LOG.debug("Sending {} ", messageToSend);
-		messageService.send(messageToSend);
 		ContactUsResponse response = validateAndSend(messageToSend);
 		
 		if(!hasErrors(response.getErrors())) {
 			try {
-				//Send email here
+				
+				StringBuilder bodyBuilder = new StringBuilder()
+						.append("<p>Name: ").append(messageToSend.getName()).append("</p>")
+						.append("<p>From: ").append(messageToSend.getEmail()).append("</p>")
+						.append("<p>Phone: ").append(messageToSend.getPhone()).append("</p>")
+						.append("<hr/>")
+						.append(messageToSend.getMessage());
+					
+				
+				
+				Message contactUsEmailMessage = new Message();
+				contactUsEmailMessage.setSubject("Contact Us Request");
+				contactUsEmailMessage.setTo(emailConfig.getUsername());
+				contactUsEmailMessage.setCc("alex@garbuz.com");
+				contactUsEmailMessage.setBody(bodyBuilder.toString());
+				contactUsEmailMessage.setHtml(true);
+				messageService.sendContactUsMessage(contactUsEmailMessage);
+				
+				Message thankyouEmailMessage = new Message();
+				thankyouEmailMessage.setTo(messageToSend.getEmail());
+				thankyouEmailMessage.setSubject("Thank you");
+				thankyouEmailMessage.setBody("Thank you for your message. We will get back to you shortly!");
+				thankyouEmailMessage.setHtml(true);
+				messageService.sendThankYouMessage(thankyouEmailMessage);
+				
+				
 			} catch (Exception e) {
 	            LOG.error("Error sending {} message. Error: {}", messageToSend, e);
 	            response.getErrors().add("Email service is unavailable.");

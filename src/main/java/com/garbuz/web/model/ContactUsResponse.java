@@ -3,6 +3,9 @@ package com.garbuz.web.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ContactUsResponse {
 	public static final String SUCCESS = "Success";
 	public static final String ERROR = "ERROR";
@@ -28,9 +31,9 @@ public class ContactUsResponse {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "ContactUsResponse [errors=" + errors + ", status=" + status + "]";
-	}
-	
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
 }
