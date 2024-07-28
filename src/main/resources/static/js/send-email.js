@@ -1,19 +1,6 @@
 
 (()=>{
 
-function showErrorMessage(message) {
-	document.getElementById("errorMessage").innerHTML = message;
-	showElementById("alertError");	
-}
-function showSuccessMessage() {
-	showElementById("alertSuccess");
-}
-function hideErrorMessage() {
-	hideElementById("alertError");	
-}
-function hideSuccessMessage() {
-	hideElementById("alertSuccess");	
-}
 function validateElement(element, isValid, message) {
 
 	var elementClass = (isValid) ? "is-valid" : "is-invalid";
@@ -26,15 +13,6 @@ function validateElement(element, isValid, message) {
 	labelElement.classList.add("form-validation-label");
 	labelElement.textContent = message; 
 	parentElement.appendChild(labelElement);
-}
-
-function hideElementById(id){
-	document.getElementById(id).style.visibility = "hidden";
-	document.getElementById(id).style.display = "none";
-}
-function showElementById(id){
-	document.getElementById(id).style.visibility = "visible";
-	document.getElementById(id).style.display = "block";
 }
 
 function validateEmail() {
@@ -91,6 +69,12 @@ function hideSpinner() {
 function showSpinner() {
 	document.getElementById("delaySpinner").style.display="block";
 }
+function openModalDialog(title, htmlText) {
+            var modal = new bootstrap.Modal(document.getElementById('alertDialog'));
+            document.getElementById('dialogLabel').textContent = title;
+            document.getElementById("dialogText").innerHTML = htmlText;
+            modal.show();
+}
 function resetFormValidationResults() {
 	document.querySelectorAll(".form-validation-label").forEach(element => {element.remove()});
 	document.querySelectorAll(".form-control").forEach(element => {
@@ -131,8 +115,6 @@ function validateUserInputAndMarkErrors() {
 window.onload = ()=>{
 	// Initialize the state here
 	hideSpinner() ;
-	hideErrorMessage();
-	hideSuccessMessage();
 	// Define global variables		
 	var sendEndPoint = document.getElementById("sendEndPointField").value;
     var phoneField = document.getElementById("phoneField");
@@ -184,24 +166,21 @@ window.onload = ()=>{
 			.then(jsonData => {
 				hideSpinner();
 				if(jsonData.status === "Success") {
-					hideErrorMessage();
-					showSuccessMessage();
+					openModalDialog("Success", "Your message has been sent");
+					resetFormValidationResults();
 				} else {
-				 	var errorMsg = "<ul>";
-				 	
+				 	var errorMsg = "We were unable to send your message. Please fix the errors below and try agian.";
+				 	errorMsg += "<ul>";
 				 	jsonData.errors.forEach(error => {
 				 		errorMsg += "<li>" + error + "</li>";
 				 	});
 				 	errorMsg += "</ul>"
-					hideSuccessMessage();
-					showErrorMessage(errorMsg);
+					openModalDialog("Error", errorMsg);
 				}
-
 			})
 			.catch(error =>{
 				hideSpinner();
-				hideSuccessMessage();
-				showErrorMessage("Email service is unavailable. Please try again later. (" + error + ")");
+				openModalDialog("Error","Email service is unavailable. Please try again later. (" + error + ")");
 			});
 		}, 500);
 		
