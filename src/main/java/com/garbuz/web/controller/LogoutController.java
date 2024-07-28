@@ -36,7 +36,7 @@ public class LogoutController {
         LogoutPage logoutPage = new LogoutPage();
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/login?logout=true");
-		mv.addObject("logoutPage", logoutPage);
+		mv.addObject(NavigationUtils.PAGE_OBJECT_KEY, logoutPage);
         return mv;
     }
 }

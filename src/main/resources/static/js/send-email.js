@@ -121,7 +121,8 @@ window.onload = ()=>{
     var nameField = document.getElementById("nameField");
     var emailField = document.getElementById("emailField");
     var messageField = document.getElementById("messageField");
-    
+	var csrfToken = document.getElementById("_csrf").value;
+	var csrfHeaderName = document.getElementById("_csrf_header").value;    
     //
 	//Define event handlers
 	//
@@ -145,10 +146,6 @@ window.onload = ()=>{
 				phone: phoneField.value,
 				message: messageField.value
 		}
-		
-		const csrfToken = document.getElementById("_csrf").value;
-		const csrfHeaderName = document.getElementById("_csrf_header").value;
-
 		
 		showSpinner();
 		setTimeout(()=>{
@@ -185,7 +182,6 @@ window.onload = ()=>{
 		}, 500);
 		
 	});
-}
-
+	}
 
 })();

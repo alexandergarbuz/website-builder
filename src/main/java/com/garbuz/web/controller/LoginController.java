@@ -24,7 +24,7 @@ public class LoginController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("loginPage");
-		mv.addObject("loginPage", loginPage);
+		mv.addObject(NavigationUtils.PAGE_OBJECT_KEY, loginPage);
 		return mv;
 	}
 }

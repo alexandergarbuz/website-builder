@@ -24,8 +24,8 @@ public class HomeController {
 		homePage.setTitle("Home");
 		
 		mv.setViewName("homePage");
-		mv.getModel().put("contentTemplate", "homepageBodyFragment");
-		mv.addObject("pageObject", homePage);
+		mv.getModel().put(NavigationUtils.BODY_FRAGMENT_KEY, "homepageBodyFragment");
+		mv.addObject(NavigationUtils.PAGE_OBJECT_KEY, homePage);
 		
 		
 		LOG.debug("Returning {} page", homePage);

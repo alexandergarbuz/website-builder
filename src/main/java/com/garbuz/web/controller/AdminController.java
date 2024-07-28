@@ -24,9 +24,9 @@ public class AdminController {
 		controlPanelPage.setTitle("Control Panel");
 		
 		mv.setViewName("adminPage");
-		mv.getModel().put("contentTemplate", "controlPanelBodyFragment");
+		mv.getModel().put(NavigationUtils.BODY_FRAGMENT_KEY, "controlPanelBodyFragment");
 		
-		mv.addObject("controlPanelPage", controlPanelPage);
+		mv.addObject(NavigationUtils.PAGE_OBJECT_KEY, controlPanelPage);
 		
 		
 		LOG.debug("Returning {} page", controlPanelPage);

@@ -31,8 +31,8 @@ public class ContactUsController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("homePage");
-		mv.addObject("pageObject", contactUsPage);
-		mv.getModel().put("contentTemplate", "contactUsFragment");
+		mv.addObject(NavigationUtils.PAGE_OBJECT_KEY, contactUsPage);
+		mv.getModel().put(NavigationUtils.BODY_FRAGMENT_KEY, "contactUsFragment");
 		LOG.debug("Returning {}", contactUsPage);
 		return mv;
 	}
