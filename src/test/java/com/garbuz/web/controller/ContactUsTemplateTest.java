@@ -37,4 +37,15 @@ public class ContactUsTemplateTest {
 		
 		Assertions.assertEquals(expectedOutput, output);
 	}
+	@Test
+	public void testProcessThankYouEmail() throws Exception {
+		
+		final String path = "/email-templates/thank-you-email.html";
+		final String pathToExcepted = "/email-templates-proccessed/thank-you-email-proccessed.html";
+		
+		String output = this.template.process(path);
+		String expectedOutput = FileUtils.readFile(pathToExcepted);
+		
+		Assertions.assertEquals(expectedOutput, output);
+	}
 }

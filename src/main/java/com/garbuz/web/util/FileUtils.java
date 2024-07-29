@@ -12,7 +12,9 @@ public class FileUtils {
             if (is == null) {
                 throw new IOException("File not found: " + path);
             }
-            return IOUtils.toString(is, Charset.defaultCharset());
+            String output = IOUtils.toString(is, Charset.defaultCharset());
+            
+            return output;
     	}
 	}
 }

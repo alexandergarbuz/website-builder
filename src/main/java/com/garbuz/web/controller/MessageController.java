@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.garbuz.web.config.EmailConfig;
+import com.garbuz.web.controller.template.ContactUsTemplate;
 import com.garbuz.web.model.ContactUsMessage;
 import com.garbuz.web.model.ContactUsResponse;
 import com.garbuz.web.model.Message;
@@ -46,27 +47,22 @@ public class MessageController {
 		if(!hasErrors(response.getErrors())) {
 			try {
 				
-				StringBuilder bodyBuilder = new StringBuilder()
-						.append("<p>Name: ").append(messageToSend.getName()).append("</p>")
-						.append("<p>From: ").append(messageToSend.getEmail()).append("</p>")
-						.append("<p>Phone: ").append(messageToSend.getPhone()).append("</p>")
-						.append("<hr/>")
-						.append(messageToSend.getMessage());
-					
+				final ContactUsTemplate contactUsTemplate = new ContactUsTemplate(messageToSend);
+				final String body = contactUsTemplate.process("/email-templates/contact-us-email.html");
+				final String thankYouBody = contactUsTemplate.process("/email-templates/thank-you-email.html");
 				
-				
-				Message contactUsEmailMessage = new Message();
+				final Message contactUsEmailMessage = new Message();
 				contactUsEmailMessage.setSubject("Contact Us Request");
 				contactUsEmailMessage.setTo(emailConfig.getUsername());
 				contactUsEmailMessage.setCc("alex@garbuz.com");
-				contactUsEmailMessage.setBody(bodyBuilder.toString());
+				contactUsEmailMessage.setBody(body);
 				contactUsEmailMessage.setHtml(true);
 				messageService.sendContactUsMessage(contactUsEmailMessage);
 				
-				Message thankyouEmailMessage = new Message();
+				final Message thankyouEmailMessage = new Message();
 				thankyouEmailMessage.setTo(messageToSend.getEmail());
-				thankyouEmailMessage.setSubject("Thank you");
-				thankyouEmailMessage.setBody("Thank you for your message. We will get back to you shortly!");
+				thankyouEmailMessage.setSubject("Thank you for your message");
+				thankyouEmailMessage.setBody(thankYouBody);
 				thankyouEmailMessage.setHtml(true);
 				messageService.sendThankYouMessage(thankyouEmailMessage);
 				
