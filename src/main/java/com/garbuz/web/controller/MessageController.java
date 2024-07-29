@@ -54,7 +54,6 @@ public class MessageController {
 				final Message contactUsEmailMessage = new Message();
 				contactUsEmailMessage.setSubject("Contact Us Request");
 				contactUsEmailMessage.setTo(emailConfig.getUsername());
-				contactUsEmailMessage.setCc("alex@garbuz.com");
 				contactUsEmailMessage.setBody(body);
 				contactUsEmailMessage.setHtml(true);
 				messageService.sendContactUsMessage(contactUsEmailMessage);
