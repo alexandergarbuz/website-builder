@@ -21,7 +21,7 @@ public class ContactUsTemplateTest {
 		
 		this.message = new ContactUsMessage();
 		this.message.setName("Alex Garbuz");
-		this.message.setEmail("email@host.com");
+		this.message.setEmail("myemail@host.com");
 		this.message.setPhone("1234567890");
 		this.message.setMessage("message");
 		
