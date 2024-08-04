@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.garbuz.web.model.ContactUsMessage;
 import com.garbuz.web.util.FileUtils;
 
-public class ContactUsTemplate {
+public class ThankYouTemplate {
 
 	private static String htmlTemplate;
 	
@@ -24,7 +24,7 @@ public class ContactUsTemplate {
 		return htmlTemplate;
 	}
 
-	public ContactUsTemplate(final String pathToTemplate) {
+	public ThankYouTemplate(final String pathToTemplate) {
 		this.pathToTemplate  = pathToTemplate;
 		this.processor = new TemplateProcessor();
 	}
@@ -34,10 +34,7 @@ public class ContactUsTemplate {
 		final String htmlTemplate = loadOnce(this.pathToTemplate);
 		
 		final Map<String, String> properties = new HashMap<>();
-		properties.put(ContactUsEmailProps.EMAIL.getValue(), message.getEmail());
-		properties.put(ContactUsEmailProps.PHONE.getValue(), message.getPhone());
 		properties.put(ContactUsEmailProps.NAME.getValue(), message.getName());
-		properties.put(ContactUsEmailProps.BODY.getValue(), message.getMessage());
 		
 		return this.processor.processTemplate(htmlTemplate, properties);
 	}

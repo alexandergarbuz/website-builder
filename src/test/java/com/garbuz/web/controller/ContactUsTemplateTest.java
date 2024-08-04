@@ -5,13 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.garbuz.web.controller.template.ContactUsTemplate;
+import com.garbuz.web.controller.template.ThankYouTemplate;
 import com.garbuz.web.model.ContactUsMessage;
 import com.garbuz.web.util.FileUtils;
 
 
 public class ContactUsTemplateTest {
 	
-	private ContactUsTemplate template;
+	private ContactUsTemplate contactUsTemplate;
+	private ThankYouTemplate thankYouTemplate;
 	private ContactUsMessage message;
 	
 	@BeforeEach
@@ -23,28 +25,21 @@ public class ContactUsTemplateTest {
 		this.message.setPhone("1234567890");
 		this.message.setMessage("message");
 		
-		this.template = new ContactUsTemplate(this.message);
+		this.contactUsTemplate  = new ContactUsTemplate("/email-templates/contact-us-email.html");
+		this.thankYouTemplate  = new ThankYouTemplate("/email-templates/thank-you-email.html");
 	}
 
 	@Test
 	public void testProcess() throws Exception {
-		
-		final String path = "/email-templates/contact-us-email.html";
-		final String pathToExcepted = "/email-templates-proccessed/contact-us-templated-proccesed.html";
-		
-		String output = this.template.process(path);
-		String expectedOutput = FileUtils.readFile(pathToExcepted);
+		String output = this.contactUsTemplate.process(message);
+		String expectedOutput = FileUtils.readFile("/email-templates-proccessed/contact-us-templated-proccesed.html");
 		
 		Assertions.assertEquals(expectedOutput, output);
 	}
 	@Test
 	public void testProcessThankYouEmail() throws Exception {
-		
-		final String path = "/email-templates/thank-you-email.html";
-		final String pathToExcepted = "/email-templates-proccessed/thank-you-email-proccessed.html";
-		
-		String output = this.template.process(path);
-		String expectedOutput = FileUtils.readFile(pathToExcepted);
+		String output = this.thankYouTemplate.process(message);
+		String expectedOutput = FileUtils.readFile("/email-templates-proccessed/thank-you-email-proccessed.html");
 		
 		Assertions.assertEquals(expectedOutput, output);
 	}

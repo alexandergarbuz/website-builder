@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.garbuz.web.config.EmailConfig;
 import com.garbuz.web.controller.template.ContactUsTemplate;
+import com.garbuz.web.controller.template.ThankYouTemplate;
 import com.garbuz.web.model.ContactUsMessage;
 import com.garbuz.web.model.ContactUsResponse;
 import com.garbuz.web.model.Message;
 import com.garbuz.web.service.MessageService;
+import com.garbuz.web.util.HtmlSanitizer;
 
 @RestController
 @RequestMapping("/message")
@@ -42,26 +44,29 @@ public class MessageController {
 	@CrossOrigin(origins = "*", methods = { RequestMethod.POST})
 	public ResponseEntity<ContactUsResponse> send(@RequestBody final ContactUsMessage messageToSend) {
 		LOG.debug("Sending {} ", messageToSend);
-		ContactUsResponse response = validateAndSend(messageToSend);
+
+		//Removing all HTML to avoid potential HTML injection issue
+		final String sanitizedHtml = HtmlSanitizer.removeHtml(messageToSend.getMessage());
+		messageToSend.setMessage(sanitizedHtml);
+		
+		final ContactUsResponse response = validateAndBuildResponse(messageToSend);
 		
 		if(!hasErrors(response.getErrors())) {
 			try {
-				
-				final ContactUsTemplate contactUsTemplate = new ContactUsTemplate(messageToSend);
-				final String body = contactUsTemplate.process("/email-templates/contact-us-email.html");
-				final String thankYouBody = contactUsTemplate.process("/email-templates/thank-you-email.html");
+				final ContactUsTemplate contactUsTemplate = new ContactUsTemplate("/email-templates/contact-us-email.html");
+				final ThankYouTemplate thankYouTemplate  = new ThankYouTemplate("/email-templates/thank-you-email.html");
 				
 				final Message contactUsEmailMessage = new Message();
 				contactUsEmailMessage.setSubject("Contact Us Request");
-				contactUsEmailMessage.setTo(emailConfig.getUsername());
-				contactUsEmailMessage.setBody(body);
+				contactUsEmailMessage.setTo(emailConfig.getUsername());//sending this to the same user I use to log in.
+				contactUsEmailMessage.setBody(contactUsTemplate.process(messageToSend));
 				contactUsEmailMessage.setHtml(true);
 				messageService.sendContactUsMessage(contactUsEmailMessage);
 				
 				final Message thankyouEmailMessage = new Message();
 				thankyouEmailMessage.setTo(messageToSend.getEmail());
 				thankyouEmailMessage.setSubject("Thank you for your message");
-				thankyouEmailMessage.setBody(thankYouBody);
+				thankyouEmailMessage.setBody(thankYouTemplate.process(messageToSend));
 				thankyouEmailMessage.setHtml(true);
 				messageService.sendThankYouMessage(thankyouEmailMessage);
 				
@@ -77,7 +82,7 @@ public class MessageController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	public ContactUsResponse validateAndSend(final ContactUsMessage emailMessage) {
+	protected ContactUsResponse validateAndBuildResponse(final ContactUsMessage emailMessage) {
 		LOG.debug("Validating {} message", emailMessage);
 		
 		String status = ContactUsResponse.SUCCESS;

@@ -8,8 +8,7 @@ public class HtmlSanitizerTest {
 	@Test
 	public void test() throws Exception {
 		
-		HtmlSanitizer sanitizer = new HtmlSanitizer();
-		Assertions.assertEquals("test text", sanitizer.removeHtml("<h>test <a href='#test'>text</a></h1>"));
+		Assertions.assertEquals("test text", HtmlSanitizer.removeHtml("<h>test <a href='#test'>text</a></h1>"));
 		
 	}
 	
