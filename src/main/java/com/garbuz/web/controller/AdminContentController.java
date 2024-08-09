@@ -16,9 +16,9 @@ import com.garbuz.web.repository.ContentElementRepository;
 
 @Controller
 @RequestMapping("/admin/content")
-public class ContentController {
+public class AdminContentController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(ContentController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AdminContentController.class);
 	
 	@Autowired
 	private ContentElementRepository contentRepoRepository;
