@@ -1,0 +1,26 @@
+<div id="bodyFragment" class="container">
+
+<h1>Content Manager</h1>
+
+<div id="contentList">
+	
+	<div class="row">
+		<div class="col mb-3">#</div>
+		<div class="col mb-3">Name</div>
+		<div class="col mb-3">Published</div>
+		<div class="col mb-3">Parent Path</div>
+		<div class="col mb-3">Path</div>
+		<div class="col mb-3"><a th:href="@{/admin/content/create}" class="btn btn-success"><i class="fa fa-plus"></i> Create</a></div>
+	</div>
+	<div class="row" th:each="element : ${pageObject.contentElements}">
+		<div class="col mb-3" th:id="'element' + ${element.id}"><span  th:text="${element.id}"/></div>
+		<div class="col mb-3"><a th:href="@{/admin/content/element} + '/' + ${element.id}"><span th:text="${element.name}"/></a></div>
+		<div class="col mb-3"><span th:text="${element.published}"/></div>
+		<div class="col mb-3"><span th:text="${element.parentPath}"/></div>
+		<div class="col mb-3"><span th:text="${element.path}"/></div>
+		<div class="col mb-3"><span th:text="${element.preview}"/></div>
+	</div>
+	
+</div>
+
+</div>
